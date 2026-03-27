@@ -1,20 +1,24 @@
-# Diabetes Prediction Project
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
 
-This project uses Machine Learning to predict whether a patient has diabetes.
+# Load dataset
+data = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv")
 
-## Technologies Used:
-- Python
-- Pandas
-- Scikit-learn
+# Features & target
+X = data.drop("Outcome", axis=1)
+y = data["Outcome"]
 
-## Algorithm:
-- K-Nearest Neighbors (KNN)
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-## Steps:
-1. Data preprocessing
-2. Model training
-3. Prediction
-4. Accuracy evaluation
+# Model
+model = KNeighborsClassifier()
+model.fit(X_train, y_train)
 
-## Result:
-The model predicts diabetes with good accuracy.
+# Prediction
+predictions = model.predict(X_test)
+
+# Accuracy
+print("Accuracy:", accuracy_score(y_test, predictions))
